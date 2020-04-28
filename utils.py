@@ -317,7 +317,7 @@ class Datagen_tree:
             x_raw = [traverse_label(n) for n in x_raw]
             y = tf.keras.preprocessing.sequence.pad_sequences(
                 y,
-                min(max([len(s) for s in y]), 100),
+                min(max([len(s) for s in y]), 30),
                 padding="post", truncating="post", value=-1.)
             yield tree2tensor(x), y, x_raw, y_raw
 
@@ -365,7 +365,7 @@ class Datagen_set:
             y = tf.constant(
                 tf.keras.preprocessing.sequence.pad_sequences(
                     y,
-                    min(max([len(s) for s in y]), 100),
+                    min(max([len(s) for s in y]), 30),
                     padding="post", truncating="post", value=-1.))
             yield x, y, x_raw, y_raw
 
@@ -414,13 +414,13 @@ class Datagen_deepcom:
             x = tf.constant(
                 tf.keras.preprocessing.sequence.pad_sequences(
                     x,
-                    min(max([len(s) for s in x]), 200),
+                    min(max([len(s) for s in x]), 100),
                     padding="post", truncating="post", value=-1))
             x_raw = [traverse_label(n) for n in x_raw]
             y = tf.constant(
                 tf.keras.preprocessing.sequence.pad_sequences(
                     y,
-                    min(max([len(s) for s in y]), 200),
+                    min(max([len(s) for s in y]), 30),
                     padding="post", truncating="post", value=-1))
             yield x, y, x_raw, y_raw
 
