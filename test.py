@@ -152,7 +152,7 @@ results = []
 
 for i in range(len(preds)):
     results.append({
-        'node_len': nodes_len[i],
+        'node_len': str(nodes_len[i]),
         'predict': preds[i],
         'true': trues[i]
     })
