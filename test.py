@@ -120,8 +120,7 @@ batch_size = args.batch
 os.makedirs(checkpoint_dir, exist_ok=True)
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 root = tfe.Checkpoint(model=model)
-history = {"loss": [], "loss_val": [], "bleu_val": []}
-
+root.restore(tf.train.latest_checkpoint(checkpoint_dir))
 
 # Setting Data Generator
 
@@ -133,10 +132,6 @@ elif args.method in ['childsum', 'multiway']:
     tst_gen = Datagen_tree(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
 elif args.method in ['nary']:
     tst_gen = Datagen_binary(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
-
-
-checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
-root = tfe.Checkpoint(model=model)
 
 # evaluation
 preds = []
