@@ -126,20 +126,12 @@ history = {"loss": [], "loss_val": [], "bleu_val": []}
 # Setting Data Generator
 
 if args.method in ['deepcom', 'seq2seq']:
-    trn_gen = Datagen_deepcom(train_ast_path, train_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/train/', train=True)
-    vld_gen = Datagen_deepcom(valid_ast_path, valid_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/valid/', train=False)
     tst_gen = Datagen_deepcom(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
 elif args.method in ['codenn']:
-    trn_gen = Datagen_set(train_ast_path, train_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/train/', train=True)
-    vld_gen = Datagen_set(valid_ast_path, valid_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/valid/', train=False)
     tst_gen = Datagen_set(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
 elif args.method in ['childsum', 'multiway']:
-    trn_gen = Datagen_tree(train_ast_path, train_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/train/', train=True)
-    vld_gen = Datagen_tree(valid_ast_path, valid_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/valid/', train=False)
     tst_gen = Datagen_tree(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
 elif args.method in ['nary']:
-    trn_gen = Datagen_binary(train_ast_path, train_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/train/', train=True)
-    vld_gen = Datagen_binary(valid_ast_path, valid_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/valid/', train=False)
     tst_gen = Datagen_binary(test_ast_path, test_y, batch_size, ast_w2i, nl_i2w, path=args.data_dir + '/tree/test/', train=False)
 
 
@@ -156,6 +148,10 @@ for x, y, x_raw, y_raw in tqdm(tst_gen(0), "Testing"):
     trues += [s[1:-1] for s in y_raw]
 
     nodes_len += [len(s) for s in x_raw]
+
+    print("node_len", nodes_len[0])
+    print("predict:", preds[0])
+    print("trues:", trues[0])
 
 results = []
 
