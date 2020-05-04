@@ -122,7 +122,6 @@ checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 root = tfe.Checkpoint(model=model)
 history = {"loss": [], "loss_val": [], "bleu_val": []}
 
-
 # Setting Data Generator
 
 if args.method in ['deepcom', 'seq2seq']:
@@ -201,15 +200,29 @@ root.restore(best_model)
 
 preds = []
 trues = []
-results = []
+nodes_len = []
+
 for x, y, _, y_raw in tqdm(tst_gen(0), "Testing"):
     res = model.translate(x, nl_i2w, nl_w2i)
     preds += res
     trues += [s[1:-1] for s in y_raw]
-    results.append({'pred': res,
-                    'true': [s[1:-1] for s in y_raw]})
 
-with open(checkpoint_dir + 'results.txt', 'r') as f:
+    nodes_len += [len(s) for s in x_raw]
+
+    print("node_len", nodes_len[0])
+    print("predict:", preds[0])
+    print("trues:", trues[0])
+
+results = []
+
+for i in range(len(preds)):
+    results.append({
+        'node_len': str(nodes_len[i]),
+        'predict': preds[i],
+        'true': trues[i]
+    })
+
+with open('./' + args.method + '_predict_results.txt', 'w') as f:
     json.dump(results, f)
 # bleus = Parallel(n_jobs=-1)(delayed(bleu4)(t, p) for t, p in (list(zip(trues, preds))))
 #
