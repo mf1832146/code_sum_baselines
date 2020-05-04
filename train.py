@@ -202,7 +202,7 @@ preds = []
 trues = []
 nodes_len = []
 
-for x, y, _, y_raw in tqdm(tst_gen(0), "Testing"):
+for x, y, x_raw, y_raw in tqdm(tst_gen(0), "Testing"):
     res = model.translate(x, nl_i2w, nl_w2i)
     preds += res
     trues += [s[1:-1] for s in y_raw]
