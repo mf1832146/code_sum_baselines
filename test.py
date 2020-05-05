@@ -137,6 +137,7 @@ elif args.method in ['nary']:
 preds = []
 trues = []
 nodes_len = []
+
 for x, y, x_raw, y_raw in tqdm(tst_gen(0), "Testing"):
     res = model.translate(x, nl_i2w, nl_w2i)
     preds += res
@@ -145,8 +146,8 @@ for x, y, x_raw, y_raw in tqdm(tst_gen(0), "Testing"):
     nodes_len += [len(s) for s in x_raw]
 
     print("node_len", nodes_len[0])
-    print("predict:", preds[0])
-    print("trues:", trues[0])
+    print("predict", preds[0])
+    print("true", trues[0])
 
 results = []
 
@@ -157,5 +158,5 @@ for i in range(len(preds)):
         'true': trues[i]
     })
 
-with open('./results.txt', 'w') as f:
+with open('./' + args.method + '_predict_results.txt', 'w') as f:
     json.dump(results, f)
