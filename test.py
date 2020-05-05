@@ -65,8 +65,8 @@ writer = tf.contrib.summary.create_file_writer("./logs/" + name, flush_millis=10
 
 # load data
 
-train_data = load_json(args.data_dir + '/train.json')
-valid_data = load_json(args.data_dir + '/valid.json')
+#train_data = load_json(args.data_dir + '/train.json')
+#valid_data = load_json(args.data_dir + '/valid.json')
 test_data = load_json(args.data_dir + '/test.json')
 
 code_i2w = read_pickle(args.data_dir + '/code_i2w.pkl')
@@ -78,24 +78,24 @@ code_w2i = {v: k for k, v in code_i2w.items()}
 nl_w2i = {v: k for k, v in nl_i2w.items()}
 ast_w2i = {v: k for k, v in ast_i2w.items()}
 
-train_ast_path = [x['ast_num'] for x in train_data]
-train_code = [x['code'] for x in train_data]
-train_nl = [x['nl'] for x in train_data]
+#train_ast_path = [x['ast_num'] for x in train_data]
+#train_code = [x['code'] for x in train_data]
+#train_nl = [x['nl'] for x in train_data]
 
-valid_ast_path = [x['ast_num'] for x in valid_data]
-valid_code = [x['code'] for x in valid_data]
-valid_nl = [x['nl'] for x in valid_data]
+#valid_ast_path = [x['ast_num'] for x in valid_data]
+#valid_code = [x['code'] for x in valid_data]
+#valid_nl = [x['nl'] for x in valid_data]
 
 test_ast_path = [x['ast_num'] for x in test_data]
 test_code = [x['code'] for x in test_data]
 test_nl = [x['nl'] for x in test_data]
 
-train_y = [[nl_w2i[t] if t in nl_w2i.keys() else nl_w2i["<UNK>"] for t in l] for l in train_nl]
-valid_y = [[nl_w2i[t] if t in nl_w2i.keys() else nl_w2i["<UNK>"] for t in l] for l in valid_nl]
+#train_y = [[nl_w2i[t] if t in nl_w2i.keys() else nl_w2i["<UNK>"] for t in l] for l in train_nl]
+#valid_y = [[nl_w2i[t] if t in nl_w2i.keys() else nl_w2i["<UNK>"] for t in l] for l in valid_nl]
 test_y = [[nl_w2i[t] if t in nl_w2i.keys() else nl_w2i["<UNK>"] for t in l] for l in test_nl]
 
-train_code_ids = [[code_w2i[t] if t in code_w2i.keys() else code_w2i["<UNK>"] for t in l] for l in train_code]
-valid_code_ids = [[code_w2i[t] if t in code_w2i.keys() else code_w2i["<UNK>"] for t in l] for l in valid_code]
+#train_code_ids = [[code_w2i[t] if t in code_w2i.keys() else code_w2i["<UNK>"] for t in l] for l in train_code]
+#valid_code_ids = [[code_w2i[t] if t in code_w2i.keys() else code_w2i["<UNK>"] for t in l] for l in valid_code]
 test_code_ids = [[code_w2i[t] if t in code_w2i.keys() else code_w2i["<UNK>"] for t in l] for l in test_code]
 
 # setting model
