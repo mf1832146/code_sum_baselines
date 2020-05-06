@@ -328,7 +328,8 @@ class Datagen_tree:
         for i in range(0, len(self.X), self.batch_size):
             x = X[i:i + self.batch_size]
             y = Y[i:i + self.batch_size]
-            x_raw = [sub_tree(read_pickle(self.path + n)) for n in x]
+            x_raw = [read_pickle(self.path + n) for n in x]
+            [sub_tree(x_) for x_ in x_raw]
             # sub_trees(x_raw)
             if self.binary:
                 x_raw = tree2binary(x_raw)
