@@ -261,7 +261,7 @@ class GeneratorLen(object):
 
 def sub_tree(root, i=0, max_size=100):
     """
-    树的最大节点个数不超过200
+    树的最大节点个数不超过100
     """
     root.num = i
     i = i + 1
@@ -378,7 +378,7 @@ class Datagen_set:
             x = X[i:i + self.batch_size]
             y = Y[i:i + self.batch_size]
             x_raw = [read_pickle(self.path + n) for n in x]
-            # sub_trees(x_raw)
+            [sub_tree(x_) for x_ in x_raw]# sub_trees(x_raw)
             y_raw = [[self.nl_dic[t] for t in s] for s in y]
             x = [traverse_label(n) for n in x_raw]
             x = [np.array([self.code_dic[t] for t in xx], "int32") for xx in x]
