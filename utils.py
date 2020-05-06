@@ -259,6 +259,26 @@ class GeneratorLen(object):
         return self.gen
 
 
+def sub_tree(root, i=0, max_size=100):
+    """
+    树的最大节点个数不超过200
+    """
+    root.num = i
+    i = i + 1
+    if i > max_size:
+        return -1
+    else:
+        for j, child in enumerate(root.children):
+            i = sub_tree(child, i, max_size)
+            if i == -1:
+                root.children = root.children[:j]
+                return -2
+            if i == -2:
+                root.children = root.children[:j + 1]
+                return i
+        return i
+
+
 def ngram(words, n):
     return list(zip(*(words[i:] for i in range(n))))
 
@@ -308,7 +328,7 @@ class Datagen_tree:
         for i in range(0, len(self.X), self.batch_size):
             x = X[i:i + self.batch_size]
             y = Y[i:i + self.batch_size]
-            x_raw = [read_pickle(self.path + n) for n in x]
+            x_raw = [sub_tree(read_pickle(self.path + n)) for n in x]
             # sub_trees(x_raw)
             if self.binary:
                 x_raw = tree2binary(x_raw)
